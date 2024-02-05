@@ -1,0 +1,28 @@
+import axios from "axios";
+import { uriDomain } from "../tools/util";
+import { ChurchDoc } from "../tools/tools";
+
+
+export const handleCreateChurch = async ({name, principal, location, image, banner, securities, oldServices, gallery, songs }: ChurchDoc) => {
+  try {
+    const response = await axios.post(`${uriDomain}/api/dashboard/create-church`, {
+        name: name,
+        principal: principal,
+        location: location,
+        image: image,
+        banner: banner,
+        securities: securities,
+        oldServices: oldServices,
+        gallery: gallery,
+        songs: songs
+    });
+
+    const data = await response.data;
+
+    // Save the token to local storage or Redux state for future use
+    return data
+  } catch (error) {
+    console.error("CREATED CHURCH ERROR: ", error);
+    // Handle error
+  }
+};
