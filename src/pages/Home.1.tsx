@@ -1018,7 +1018,7 @@ export const Home: React.FC = () => {
         </Stack>
       </Box>
 
-      {/* SONGS */}
+      {/* SONGS  */}
       <Box
         mt={8}
         marginBottom={8}
