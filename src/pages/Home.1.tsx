@@ -10,11 +10,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { cloudName, cloudPreset } from "../tools/util";
-import { ChurchDoc } from '../tools/tools';
-import { handleCreateChurch } from '../request/createChurch';
-import BeautifulLoader from '../components/loader/Loader';
-
+import { cloudName, cloudPreset } from '../tools/util'
+import { ChurchDoc } from '../tools/tools'
+import { handleCreateChurch } from '../request/createChurch'
+import BeautifulLoader from '../components/loader/Loader'
 
 interface DeaconTrustee {
   names: string
@@ -34,29 +33,27 @@ interface Songs {
 }
 
 interface Principal {
-  pastor: string;
-  wife: string;
-  image: string;
-  description: string;
+  pastor: string
+  wife: string
+  image: string
+  description: string
 }
 
 interface IMAGES {
-  pastorWife: boolean;
-  churchImage: boolean;
-  churchBanners: boolean;
-  deacon: boolean;
-  trustee: boolean;
-  gallery: boolean;
+  pastorWife: boolean
+  churchImage: boolean
+  churchBanners: boolean
+  deacon: boolean
+  trustee: boolean
+  gallery: boolean
 }
 
 export const Home: React.FC = () => {
-  const cloudinaryRef = useRef<any>();
-  const widgetRef: React.MutableRefObject<any> = useRef();
+  const cloudinaryRef = useRef<any>()
+  const widgetRef: React.MutableRefObject<any> = useRef()
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [formDataSubmitted, setFormDataSubmitted] = useState<boolean>(false);
-
-
+  const [loading, setLoading] = useState<boolean>(false)
+  const [formDataSubmitted, setFormDataSubmitted] = useState<boolean>(false)
 
   const [deacons, setDeacons] = useState<DeaconTrustee[]>([
     { names: '', descriptions: '', image: '' },
@@ -67,83 +64,101 @@ export const Home: React.FC = () => {
   const [pastService, setPastService] = useState<PastService[]>([
     { title: '', preacher: '', sermon: '' },
   ])
-  const [songs, setSongs] = useState<Songs[]>([
-    { title: '', songUrl: '' }
-  ])
+  const [songs, setSongs] = useState<Songs[]>([{ title: '', songUrl: '' }])
 
   // IMAGES
-  const [image, setImage] = useState<string>('');
-  const [images, setImages] = useState<string[]>([]);
-  const [state, setState] = useState<IMAGES>({ pastorWife: false, churchImage: false, churchBanners: false, deacon: false, trustee: false, gallery: false })
+  const [image, setImage] = useState<string>('')
+  const [images, setImages] = useState<string[]>([])
+  const [state, setState] = useState<IMAGES>({
+    pastorWife: false,
+    churchImage: false,
+    churchBanners: false,
+    deacon: false,
+    trustee: false,
+    gallery: false,
+  })
   const [pastorWife, setPastorWife] = useState<string>('')
   const [churchImage, setChurchIMage] = useState<string>('')
-  const [churchBanners, setChurchBanners] = useState<string[]>([]);
+  const [churchBanners, setChurchBanners] = useState<string[]>([])
   const [gallery, setGallery] = useState<string[]>([])
-
-
 
   const [churchName, setChurchName] = useState<string>('')
   const [churchLocation, setChurchLocation] = useState<string>('')
-  const [principal, setPrincipal] = useState<Principal>({ pastor: '', wife: '', description: '', image: '' })
+  const [principal, setPrincipal] = useState<Principal>({
+    pastor: '',
+    wife: '',
+    description: '',
+    image: '',
+  })
 
-  const [indexNumber, setIndexNumber] = useState<number>(0);
+  const [indexNumber, setIndexNumber] = useState<number>(0)
   // const [churchImage, setChurchImage] = useState<string>()
 
   const [formData, setFormData] = useState<ChurchDoc>({
-    name: "",
+    name: '',
     principal: {
-      description: "",
+      description: '',
       image: '',
-      pastor: "",
-      wife: "",
+      pastor: '',
+      wife: '',
     },
-    location: "",
+    location: '',
     image: '',
     banner: [],
     securities: {
       deacons: [
         {
-          names: "",
-          descriptions: "",
-          image: "",
+          names: '',
+          descriptions: '',
+          image: '',
         },
       ],
       trustees: [
         {
-          names: "",
-          descriptions: "",
-          image: "",
+          names: '',
+          descriptions: '',
+          image: '',
         },
       ],
     },
     oldServices: [
       {
-        preacher: "",
-        sermon: "",
-        title: "",
+        preacher: '',
+        sermon: '',
+        title: '',
       },
     ],
     gallery: [],
     songs: [],
-  });
+  })
 
-  const handleChurchNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChurchNameChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setChurchName(event.target.value)
   }
 
-  const handleChurchLocationChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChurchLocationChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setChurchLocation(event.target.value)
   }
 
-  const handlePastorNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handlePastorNameChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setPrincipal({ ...principal, pastor: event.target.value })
   }
 
-  const handleWifeNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleWifeNameChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setPrincipal({ ...principal, wife: event.target.value })
   }
 
-  const handlePrincipalDescriptionChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handlePrincipalDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setPrincipal({ ...principal, description: event.target.value })
   }
 
@@ -223,55 +238,67 @@ export const Home: React.FC = () => {
   }
 
   const handleAddSongs = () => {
-    setSongs((prevSongs) => [
-      ...prevSongs,
-      { title: '', songUrl: '' },
-    ])
+    setSongs((prevSongs) => [...prevSongs, { title: '', songUrl: '' }])
   }
 
   const handleDeaconImageChange = (index: number) => {
-    setState({ ...state, churchImage: false, pastorWife: false, churchBanners: false, deacon: true, trustee: false, gallery: false });
-    widgetRef.current.open();
+    setState({
+      ...state,
+      churchImage: false,
+      pastorWife: false,
+      churchBanners: false,
+      deacon: true,
+      trustee: false,
+      gallery: false,
+    })
+    widgetRef.current.open()
 
     // Update the indexNumber state to keep track of the deacon being modified
-    setIndexNumber(index);
-  };
+    setIndexNumber(index)
+  }
 
   const handleTrusteeImageChange = (index: number) => {
-    setState({ ...state, churchImage: false, pastorWife: false, churchBanners: false, deacon: false, trustee: true, gallery: false });
-    widgetRef.current.open();
+    setState({
+      ...state,
+      churchImage: false,
+      pastorWife: false,
+      churchBanners: false,
+      deacon: false,
+      trustee: true,
+      gallery: false,
+    })
+    widgetRef.current.open()
 
     // Update the indexNumber state to keep track of the deacon being modified
-    setIndexNumber(index);
-  };
-
-
-
+    setIndexNumber(index)
+  }
 
   useEffect(() => {
-    cloudinaryRef.current = (window as any).cloudinary;
-    widgetRef.current = cloudinaryRef.current.createUploadWidget({
-      cloudName: cloudName,
-      upload_preset: cloudPreset
-    }, function (error: any, result: any) {
-      if (!error && result && result.event === "success") {
-        // Access the secure_url of the uploaded image
-        const secureUrl = result.info.secure_url;
-        console.log("Secure URL: ", secureUrl);
-        const banners: string[] = [];
+    cloudinaryRef.current = (window as any).cloudinary
+    widgetRef.current = cloudinaryRef.current.createUploadWidget(
+      {
+        cloudName: cloudName,
+        upload_preset: cloudPreset,
+      },
+      function (error: any, result: any) {
+        if (!error && result && result.event === 'success') {
+          // Access the secure_url of the uploaded image
+          const secureUrl = result.info.secure_url
+          console.log('Secure URL: ', secureUrl)
+          const banners: string[] = []
 
-        banners.push(secureUrl);
+          banners.push(secureUrl)
 
-        setImage(secureUrl);
-        setImages(banners);
-        console.log("banners URL: ", banners);
-
-      } else {
-        // Handle error case
-        console.error("Error uploading image:", error);
+          setImage(secureUrl)
+          setImages(banners)
+          console.log('banners URL: ', banners)
+        } else {
+          // Handle error case
+          console.error('Error uploading image:', error)
+        }
       }
-    })
-  }, []);
+    )
+  }, [])
 
   useEffect(() => {
     if (state.pastorWife) {
@@ -284,11 +311,11 @@ export const Home: React.FC = () => {
     }
 
     if (state.churchBanners) {
-      setChurchBanners((prevBanners) => [...prevBanners, ...images]);
+      setChurchBanners((prevBanners) => [...prevBanners, ...images])
     }
 
     if (state.gallery) {
-      setGallery((prevGallery) => [...prevGallery, ...images]);
+      setGallery((prevGallery) => [...prevGallery, ...images])
     }
 
     if (state.deacon) {
@@ -297,7 +324,7 @@ export const Home: React.FC = () => {
         prevDeacons.map((deacon, i) =>
           i === indexNumber ? { ...deacon, image: image } : deacon
         )
-      );
+      )
     }
 
     if (state.trustee) {
@@ -306,7 +333,7 @@ export const Home: React.FC = () => {
         prevTrustees.map((trustee, i) =>
           i === indexNumber ? { ...trustee, image: image } : trustee
         )
-      );
+      )
     }
   }, [image, images, state])
 
@@ -350,23 +377,23 @@ export const Home: React.FC = () => {
   //   // setGallery((prevGallery) => [...prevGallery, ...initImage]);
   // }, [])
 
-  console.log("STATE out: ", state);
-  console.log("pastorWife: ", pastorWife);
-  console.log("churchImage: ", churchImage);
-  console.log("IMAGES: ", images)
+  console.log('STATE out: ', state)
+  console.log('pastorWife: ', pastorWife)
+  console.log('churchImage: ', churchImage)
+  console.log('IMAGES: ', images)
 
   const uploadNewChurchData = (inputData: ChurchDoc) => {
-    handleCreateChurch(inputData).then((data) => console.info("CREATED CHURCH: ", JSON.stringify(data)))
-      .then(() => window.alert("Submitted Successfully !"))
+    handleCreateChurch(inputData)
+      .then((data) => console.info('CREATED CHURCH: ', JSON.stringify(data)))
+      .then(() => window.alert('Submitted Successfully !'))
       .then(() => setLoading(false))
-      .catch((error) => console.log('UNABLE TO CREATE CHURCH: ', error));
+      .catch((error) => console.log('UNABLE TO CREATE CHURCH: ', error))
   }
 
-
   const handleSubmit = () => {
-    setLoading(true);
+    setLoading(true)
 
-    console.log('church name:', churchName);
+    console.log('church name:', churchName)
     console.log('churchLocation', churchLocation)
     console.log('principal', principal)
     console.log('churchImage', churchImage)
@@ -399,26 +426,24 @@ export const Home: React.FC = () => {
       oldServices: pastService,
       gallery: gallery,
       songs: songs,
-    });
+    })
 
-    console.log('****** FORM_DATA ******** ', formData);
-    setFormDataSubmitted(true);
-
-  };
+    console.log('****** FORM_DATA ******** ', formData)
+    setFormDataSubmitted(true)
+  }
 
   useEffect(() => {
     if (formDataSubmitted && Object.keys(formData).length !== 0) {
       // Perform the function to send formData to the database
-      console.log('Sending FormData to the database:', formData);
+      console.log('Sending FormData to the database:', formData)
 
       // Set the flag to indicate that the data has been submitted
-      uploadNewChurchData(formData);
+      uploadNewChurchData(formData)
     }
-  }, [formData, formDataSubmitted]);
+  }, [formData, formDataSubmitted])
 
   return (
     <React.Fragment>
-
       <Box mt={18}>
         <Typography
           mb={1.5}
@@ -465,9 +490,7 @@ export const Home: React.FC = () => {
           label="Church Name"
           variant="outlined"
           value={churchName}
-          onChange={(e) =>
-            handleChurchNameChange(e)
-          }
+          onChange={(e) => handleChurchNameChange(e)}
           style={{ width: '100%' }}
           className="textField"
         />
@@ -477,9 +500,7 @@ export const Home: React.FC = () => {
           label="Church Location"
           variant="outlined"
           value={churchLocation}
-          onChange={(e) =>
-            handleChurchLocationChange(e)
-          }
+          onChange={(e) => handleChurchLocationChange(e)}
           style={{ width: '100%', marginTop: '1.5rem' }}
           className="textField"
         />
@@ -509,9 +530,7 @@ export const Home: React.FC = () => {
           label="Pastor Name"
           variant="outlined"
           value={principal.pastor}
-          onChange={(e) =>
-            handlePastorNameChange(e)
-          }
+          onChange={(e) => handlePastorNameChange(e)}
           style={{ width: '100%' }}
           className="textField"
         />
@@ -521,9 +540,7 @@ export const Home: React.FC = () => {
           label="Wife Name"
           variant="outlined"
           value={principal.wife}
-          onChange={(e) =>
-            handleWifeNameChange(e)
-          }
+          onChange={(e) => handleWifeNameChange(e)}
           style={{ width: '100%' }}
           className="textField field"
         />
@@ -534,9 +551,7 @@ export const Home: React.FC = () => {
           multiline
           rows={4}
           value={principal.description}
-          onChange={(e) =>
-            handlePrincipalDescriptionChange(e)
-          }
+          onChange={(e) => handlePrincipalDescriptionChange(e)}
           style={{ width: '100%' }}
           className="textField field"
         />
@@ -550,7 +565,7 @@ export const Home: React.FC = () => {
         >
           <Avatar
             alt="Remy Sharp"
-            src={pastorWife ? pastorWife : "https://i.pravatar.cc/300"}
+            src={pastorWife ? pastorWife : 'https://i.pravatar.cc/300'}
             sx={{ width: 150, height: 150 }}
           />
           <Typography
@@ -564,10 +579,20 @@ export const Home: React.FC = () => {
             Pastor & Wife
           </Typography>
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button variant="outlined" onClick={() => {
-              setState({ ...state, churchImage: false, pastorWife: true, churchBanners: false, deacon: false, trustee: false, gallery: false });
-              widgetRef.current.open();
-            }}
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setState({
+                  ...state,
+                  churchImage: false,
+                  pastorWife: true,
+                  churchBanners: false,
+                  deacon: false,
+                  trustee: false,
+                  gallery: false,
+                })
+                widgetRef.current.open()
+              }}
               style={{ marginRight: 20 }}
             >
               Select Image
@@ -584,7 +609,7 @@ export const Home: React.FC = () => {
         >
           <Avatar
             alt="Remy Sharp"
-            src={churchImage ? churchImage : "https://i.pravatar.cc/300"}
+            src={churchImage ? churchImage : 'https://i.pravatar.cc/300'}
             sx={{ width: 150, height: 150 }}
           />
           <Typography
@@ -598,10 +623,19 @@ export const Home: React.FC = () => {
             Church Image
           </Typography>
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button variant="outlined"
+            <Button
+              variant="outlined"
               onClick={() => {
-                setState({ ...state, churchImage: true, pastorWife: false, churchBanners: false, deacon: false, trustee: false, gallery: false });
-                widgetRef.current.open();
+                setState({
+                  ...state,
+                  churchImage: true,
+                  pastorWife: false,
+                  churchBanners: false,
+                  deacon: false,
+                  trustee: false,
+                  gallery: false,
+                })
+                widgetRef.current.open()
               }}
               style={{ marginRight: 20 }}
             >
@@ -628,25 +662,38 @@ export const Home: React.FC = () => {
             Church Banners
           </Typography>
 
-          <ImageList sx={{ width: 500, height: 'auto' }} cols={3} rowHeight={164}>
-            {churchBanners.length >= 2 && churchBanners.map((item, index) => (
-              <ImageListItem key={index}>
-                <img
-                  srcSet={`${item}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  src={`${item}?w=164&h=164&fit=crop&auto=format`}
-                  alt="image banner"
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
+          <ImageList
+            sx={{ width: 500, height: 'auto' }}
+            cols={3}
+            rowHeight={164}
+          >
+            {churchBanners.length >= 2 &&
+              churchBanners.map((item, index) => (
+                <ImageListItem key={index}>
+                  <img
+                    srcSet={`${item}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item}?w=164&h=164&fit=crop&auto=format`}
+                    alt="image banner"
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
           </ImageList>
 
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               variant="outlined"
               onClick={() => {
-                setState({ ...state, churchImage: false, pastorWife: false, churchBanners: true, deacon: false, trustee: false, gallery: false });
-                widgetRef.current.open();
+                setState({
+                  ...state,
+                  churchImage: false,
+                  pastorWife: false,
+                  churchBanners: true,
+                  deacon: false,
+                  trustee: false,
+                  gallery: false,
+                })
+                widgetRef.current.open()
               }}
               style={{ marginRight: 20 }}
             >
@@ -828,7 +875,9 @@ export const Home: React.FC = () => {
             marginTop: '3rem',
           }}
         >
-          <Button variant="contained" onClick={handleAddTrustee}>Add New Trustee</Button>
+          <Button variant="contained" onClick={handleAddTrustee}>
+            Add New Trustee
+          </Button>
         </Container>
       </Box>
 
@@ -898,7 +947,9 @@ export const Home: React.FC = () => {
             marginTop: '3rem',
           }}
         >
-          <Button variant="contained" onClick={handleAddPastServices}>Add New PAst Service</Button>
+          <Button variant="contained" onClick={handleAddPastServices}>
+            Add New PAst Service
+          </Button>
         </Container>
       </Box>
 
@@ -926,25 +977,38 @@ export const Home: React.FC = () => {
           mt={5}
           style={{ alignItems: 'center' }}
         >
-          <ImageList sx={{ width: 500, height: 'auto' }} cols={3} rowHeight={164}>
-            {gallery && gallery.map((item, index) => (
-              <ImageListItem key={index}>
-                <img
-                  srcSet={`${item}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  src={`${item}?w=164&h=164&fit=crop&auto=format`}
-                  alt={`image - ${index}`}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
+          <ImageList
+            sx={{ width: 500, height: 'auto' }}
+            cols={3}
+            rowHeight={164}
+          >
+            {gallery &&
+              gallery.map((item, index) => (
+                <ImageListItem key={index}>
+                  <img
+                    srcSet={`${item}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item}?w=164&h=164&fit=crop&auto=format`}
+                    alt={`image - ${index}`}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
           </ImageList>
 
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               variant="outlined"
               onClick={() => {
-                setState({ ...state, churchImage: false, pastorWife: false, churchBanners: false, deacon: false, trustee: false, gallery: true });
-                widgetRef.current.open();
+                setState({
+                  ...state,
+                  churchImage: false,
+                  pastorWife: false,
+                  churchBanners: false,
+                  deacon: false,
+                  trustee: false,
+                  gallery: true,
+                })
+                widgetRef.current.open()
               }}
               style={{ marginRight: 20 }}
             >
@@ -1009,13 +1073,20 @@ export const Home: React.FC = () => {
             marginTop: '3rem',
           }}
         >
-          <Button variant="contained" onClick={handleAddSongs}>Add New Song</Button>
+          <Button variant="contained" onClick={handleAddSongs}>
+            Add New Song
+          </Button>
         </Container>
       </Box>
 
       <Stack direction={'row'} style={{ justifyContent: 'center' }}>
-        <Button variant="contained" onClick={handleSubmit} style={{ marginBottom: 40, backgroundColor: '#040b4b' }}>Submit</Button>
-
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          style={{ marginBottom: 40, backgroundColor: '#040b4b' }}
+        >
+          Submit
+        </Button>
       </Stack>
 
       <BeautifulLoader visible={loading} />
