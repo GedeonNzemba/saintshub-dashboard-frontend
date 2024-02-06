@@ -14,6 +14,10 @@ import { cloudName, cloudPreset } from '../tools/util'
 import { ChurchDoc } from '../tools/tools'
 import { handleCreateChurch } from '../request/createChurch'
 import BeautifulLoader from '../components/loader/Loader'
+import galleryImageDemo from '../assets/gallery.gif'
+import pastorWifeImageDemo from '../assets/pastorWife.gif'
+import churchIMageDemo from '../assets/church.gif'
+import churchBannersDemo from '../assets/banners.gif'
 
 interface DeaconTrustee {
   names: string
@@ -563,11 +567,25 @@ export const Home: React.FC = () => {
           mt={5}
           style={{ alignItems: 'center' }}
         >
-          <Avatar
+          {pastorWife && (
+            <Avatar
             alt="Remy Sharp"
-            src={pastorWife ? pastorWife : 'https://i.pravatar.cc/300'}
+            src={pastorWife}
             sx={{ width: 150, height: 150 }}
           />
+          )}
+
+          {!pastorWife && (
+             <div>
+             <img
+                srcSet={pastorWifeImageDemo}
+                src={pastorWifeImageDemo}
+                alt="pastor and wife"
+            loading="lazy"
+            style={{width: '25rem'}}
+              />
+          </div>
+          )}
           <Typography
             variant="h6"
             component="h2"
@@ -607,11 +625,25 @@ export const Home: React.FC = () => {
           mt={5}
           style={{ alignItems: 'center' }}
         >
-          <Avatar
-            alt="Remy Sharp"
-            src={churchImage ? churchImage : 'https://i.pravatar.cc/300'}
+          {churchImage && (
+            <Avatar
+            alt="church image"
+            src={churchImage}
             sx={{ width: 150, height: 150 }}
           />
+          )}
+
+          {!churchImage && (
+             <div>
+             <img
+                srcSet={churchIMageDemo}
+                src={churchIMageDemo}
+                alt="church image demo"
+            loading="lazy"
+            style={{width: '25rem'}}
+              />
+          </div>
+          )}
           <Typography
             variant="h6"
             component="h2"
@@ -679,6 +711,18 @@ export const Home: React.FC = () => {
                 </ImageListItem>
               ))}
           </ImageList>
+
+          {churchBanners.length === 0 && (
+              <div>
+              <img
+                 srcSet={churchBannersDemo}
+                 src={churchBannersDemo}
+                 alt="church banner demo"
+             loading="lazy"
+             style={{width: '25rem'}}
+               />
+           </div>
+          )}
 
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
@@ -993,7 +1037,21 @@ export const Home: React.FC = () => {
                   />
                 </ImageListItem>
               ))}
+            
+           
           </ImageList>
+
+          {gallery.length === 0 && (
+              <div>
+                 <img
+                    srcSet={galleryImageDemo}
+                    src={galleryImageDemo}
+                    alt="image banner"
+                loading="lazy"
+                style={{width: '25rem'}}
+                  />
+              </div>
+            )}
 
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
