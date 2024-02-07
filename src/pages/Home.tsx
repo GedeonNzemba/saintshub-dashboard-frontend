@@ -448,7 +448,7 @@ export const Home: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Box mt={18}>
+      {/* <Box mt={18}>
         <Typography
           mb={1.5}
           variant="h2"
@@ -468,11 +468,10 @@ export const Home: React.FC = () => {
         >
           All fields should not be empty, Gedeon
         </Typography>
-      </Box>
+      </Box> */}
 
       {/* GENERAL */}
       <Box
-        mt={8}
         sx={{ backgroundColor: '#f7f7f7' }}
         p={4}
         borderRadius={6}
@@ -582,7 +581,7 @@ export const Home: React.FC = () => {
                 src={pastorWifeImageDemo}
                 alt="pastor and wife"
             loading="lazy"
-            style={{width: '25rem'}}
+                className="image-container"
               />
           </div>
           )}
@@ -640,7 +639,7 @@ export const Home: React.FC = () => {
                 src={churchIMageDemo}
                 alt="church image demo"
             loading="lazy"
-            style={{width: '25rem'}}
+            className="image-container"
               />
           </div>
           )}
@@ -715,11 +714,11 @@ export const Home: React.FC = () => {
           {churchBanners.length === 0 && (
               <div>
               <img
-                 srcSet={churchBannersDemo}
-                 src={churchBannersDemo}
+                 srcSet={`${churchBannersDemo}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                 src={`${churchBannersDemo}?w=164&h=164&fit=crop&auto=format`}
                  alt="church banner demo"
              loading="lazy"
-             style={{width: '25rem'}}
+             className="image-container"
                />
            </div>
           )}
@@ -1048,7 +1047,7 @@ export const Home: React.FC = () => {
                     src={galleryImageDemo}
                     alt="image banner"
                 loading="lazy"
-                style={{width: '25rem'}}
+                className="image-container"
                   />
               </div>
             )}

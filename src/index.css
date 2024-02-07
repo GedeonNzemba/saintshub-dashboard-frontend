@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -52,4 +53,15 @@ code {
 
 .song-box {
   margin-bottom: 10rem !important;
+}
+
+.image-container {
+  width: 25rem;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .image-container {
+    width: 100%;
+  }
 }
