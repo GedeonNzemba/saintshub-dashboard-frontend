@@ -3,9 +3,10 @@ import { uriDomain } from "../tools/util";
 import { ChurchDoc } from "../tools/tools";
 
 
-export const handleCreateChurch = async ({name, principal, location, image, banner, securities, oldServices, gallery, songs }: ChurchDoc) => {
+export const handleCreateChurch = async ({logo, name, principal, location, image, banner, securities, oldServices, gallery, songs }: ChurchDoc) => {
   try {
     const response = await axios.post(`${uriDomain}/api/dashboard/create-church`, {
+        logo: logo,
         name: name,
         principal: principal,
         location: location,

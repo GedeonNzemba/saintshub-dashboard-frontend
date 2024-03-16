@@ -383,6 +383,7 @@ export const Home: React.FC = () => {
     console.log('trustee', trustees)
     console.log('pastService', pastService)
     console.log('songs', songs)
+    console.log('songs', churchLogo)
     // Perform other actions with the deacons data as needed  console.log('songs', formData)
 
     setFormData({
