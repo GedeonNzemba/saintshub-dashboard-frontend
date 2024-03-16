@@ -18,6 +18,8 @@ import galleryImageDemo from '../assets/gallery.gif'
 import pastorWifeImageDemo from '../assets/pastorWife.gif'
 import churchIMageDemo from '../assets/church.gif'
 import churchBannersDemo from '../assets/banners.gif'
+import defaultLogo from '../assets/logo.gif'
+
 
 interface DeaconTrustee {
   names: string
@@ -44,6 +46,7 @@ interface Principal {
 }
 
 interface IMAGES {
+  churchLogo: boolean
   pastorWife: boolean
   churchImage: boolean
   churchBanners: boolean
@@ -58,6 +61,8 @@ export const Home: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(false)
   const [formDataSubmitted, setFormDataSubmitted] = useState<boolean>(false)
+
+  // const [logo, setLogo] = useState<string>('')
 
   const [deacons, setDeacons] = useState<DeaconTrustee[]>([
     { names: '', descriptions: '', image: '' },
@@ -74,6 +79,7 @@ export const Home: React.FC = () => {
   const [image, setImage] = useState<string>('')
   const [images, setImages] = useState<string[]>([])
   const [state, setState] = useState<IMAGES>({
+    churchLogo: false,
     pastorWife: false,
     churchImage: false,
     churchBanners: false,
@@ -88,6 +94,8 @@ export const Home: React.FC = () => {
 
   const [churchName, setChurchName] = useState<string>('')
   const [churchLocation, setChurchLocation] = useState<string>('')
+  const [churchLogo, setChurchLogo] = useState<string>('')
+
   const [principal, setPrincipal] = useState<Principal>({
     pastor: '',
     wife: '',
@@ -99,6 +107,7 @@ export const Home: React.FC = () => {
   // const [churchImage, setChurchImage] = useState<string>()
 
   const [formData, setFormData] = useState<ChurchDoc>({
+    logo: '',
     name: '',
     principal: {
       description: '',
@@ -254,6 +263,7 @@ export const Home: React.FC = () => {
       deacon: true,
       trustee: false,
       gallery: false,
+      churchLogo: false,
     })
     widgetRef.current.open()
 
@@ -270,6 +280,7 @@ export const Home: React.FC = () => {
       deacon: false,
       trustee: true,
       gallery: false,
+      churchLogo: false,
     })
     widgetRef.current.open()
 
@@ -310,6 +321,11 @@ export const Home: React.FC = () => {
       setPrincipal({ ...principal, image: image })
     }
 
+    if (state.churchLogo) {
+      setChurchLogo(image)
+      //setLogo(image)
+    }
+
     if (state.churchImage) {
       setChurchIMage(image)
     }
@@ -341,46 +357,6 @@ export const Home: React.FC = () => {
     }
   }, [image, images, state])
 
-  // useEffect(() => {
-  //   let initImage: string = '';
-  //   let initImages: string[] = [];
-
-  //   setImage(initImage);
-  //   setImages(initImages);
-  //   // let initImage: string[] = [];
-
-  //   // setDeacons((prevDeacons) => [
-  //   //   ...prevDeacons,
-  //   //   { name: '', description: '', imageURL: '' },
-  //   // ])
-
-  //   // setTrustees((prevTrustee) => [
-  //   //   ...prevTrustee,
-  //   //   { name: '', description: '', imageURL: '' },
-  //   // ])
-
-  //   // setPastService((prevPastService) => [
-  //   //   ...prevPastService,
-  //   //   { title: '', preacher: '', sermonUrl: '' },
-  //   // ])
-
-  //   // setSongs((prevSongs) => [
-  //   //   ...prevSongs,
-  //   //   { title: '', songUrl: ''},
-  //   // ])
-
-  //   // setPrincipal({ ...principal, pastor: '' })
-  //   // setPrincipal({ ...principal, description: '' })
-  //   // setPrincipal({ ...principal, wife: '' })
-  //   // setPrincipal({ ...principal, image: '' })
-
-  //   // setChurchName('')
-  //   // setChurchLocation('')
-
-  //   // setChurchBanners((prevBanners) => [...prevBanners, ...initImage]);
-  //   // setGallery((prevGallery) => [...prevGallery, ...initImage]);
-  // }, [])
-
   console.log('STATE out: ', state)
   console.log('pastorWife: ', pastorWife)
   console.log('churchImage: ', churchImage)
@@ -411,6 +387,7 @@ export const Home: React.FC = () => {
 
     setFormData({
       ...formData,
+       logo: churchLogo,
       name: churchName,
       principal: {
         ...formData.principal,
@@ -507,6 +484,64 @@ export const Home: React.FC = () => {
           style={{ width: '100%', marginTop: '1.5rem' }}
           className="textField"
         />
+
+<Stack
+          direction="column"
+          spacing={2}
+          mt={5}
+          style={{ alignItems: 'center' }}
+        >
+          {churchLogo && (
+            <Avatar
+            alt="Church Logo"
+            src={churchLogo}
+            sx={{ width: 150, height: 150 }}
+          />
+          )}
+
+          {!churchLogo && (
+             <div>
+             <img
+                srcSet={defaultLogo}
+                src={defaultLogo}
+                alt="pastor and wife"
+            loading="lazy"
+                className="image-container"
+              />
+          </div>
+          )}
+          <Typography
+            variant="h6"
+            component="h2"
+            fontFamily={'roboto'}
+            fontWeight={500}
+            color={'#000'}
+            mb={2}
+          >
+            Church Logo
+          </Typography>
+          <Container style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setState({
+                  ...state,
+                  churchLogo: true,
+                  churchImage: false,
+                  pastorWife: false,
+                  churchBanners: false,
+                  deacon: false,
+                  trustee: false,
+                  gallery: false,
+                })
+                widgetRef.current.open()
+              }}
+              style={{ marginRight: 20 }}
+            >
+              Select Image
+            </Button>
+          </Container>
+        </Stack>
       </Box>
 
       <Box
@@ -607,6 +642,7 @@ export const Home: React.FC = () => {
                   deacon: false,
                   trustee: false,
                   gallery: false,
+                  churchLogo: false,
                 })
                 widgetRef.current.open()
               }}
@@ -665,6 +701,7 @@ export const Home: React.FC = () => {
                   deacon: false,
                   trustee: false,
                   gallery: false,
+                  churchLogo: false,
                 })
                 widgetRef.current.open()
               }}
@@ -735,6 +772,7 @@ export const Home: React.FC = () => {
                   deacon: false,
                   trustee: false,
                   gallery: false,
+                  churchLogo: false,
                 })
                 widgetRef.current.open()
               }}
@@ -1064,6 +1102,7 @@ export const Home: React.FC = () => {
                   deacon: false,
                   trustee: false,
                   gallery: true,
+                  churchLogo: false,
                 })
                 widgetRef.current.open()
               }}

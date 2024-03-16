@@ -41,7 +41,8 @@ interface Songs {
   songUrl: string
 }
   
-  export interface ChurchDoc {
+export interface ChurchDoc {
+  logo: string;
     name: string;
     principal: Principal;
     location: string;
